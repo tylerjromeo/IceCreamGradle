@@ -1,0 +1,105 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.5.+'
+    }
+}
+apply plugin: 'android'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:18.0.0'
+    //compile 'com.google.code.gson:gson:2.2.2'
+}
+
+android {
+    compileSdkVersion 18
+    buildToolsVersion "18.1.0"
+    productFlavors {
+        chocolate {
+            packageName 'com.romeo.icecreamgradle.chocolate'
+        }
+        vanilla {
+            packageName 'com.romeo.icecreamgradle.vanilla'
+        }
+        strawberry {
+            packageName 'com.romeo.icecreamgradle.strawberry'
+        }
+    }
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+            }
+            res {
+                srcDir 'src/main/res'
+            }
+            assets {
+                srcDir 'src/mainassets'
+            }
+            manifest {
+                srcFile 'src/main/AndroidManifest.xml'
+            }
+        }
+        chocolate {
+            java {
+                srcDir 'src/chocolate/java'
+            }
+            res {
+                srcDir 'src/chocolate/res'
+            }
+        }
+        vanilla {
+            java {
+                srcDir 'src/vanilla/java'
+            }
+            res {
+                srcDir 'src/vanilla/res'
+            }
+        }
+        strawberry {
+            java {
+                srcDir 'src/strawberry/java'
+            }
+            res {
+                srcDir 'src/strawberry/res'
+            }
+        }
+    }
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 18
+    }
+    signingConfigs {
+        release
+    }
+
+    buildTypes {
+        debug {
+            versionNameSuffix "-debug"
+        }
+        release {
+            versionNameSuffix "-release"
+            zipAlign true
+            signingConfig signingConfigs.release
+        }
+    }
+
+    if (project.hasProperty('keyStore')){
+        android.signingConfigs.release.storeFile = file(keyStore)
+    }
+    if (project.hasProperty('keyStorePassword')){
+        android.signingConfigs.release.storePassword = keyStorePassword
+    }
+    if (project.hasProperty('keyStoreAlias')){
+        android.signingConfigs.release.keyAlias = keyStoreAlias
+    }
+    if (project.hasProperty('keyStoreAliasPassword')){
+        android.signingConfigs.release.keyPassword = keyStoreAliasPassword
+    }
+}

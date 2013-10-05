@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">IceCreamGradle</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Guess what my favorite flavor is?</string>
+    <string name="title_activity_flavor">Flavor</string>
+    <string name="chocolate">Chocolate!</string>
+    <string name="strawberry">Strawberry!</string>
+    <string name="vanilla">Vanilla!</string>
+
+</resources>
