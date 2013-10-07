@@ -14,7 +14,7 @@ repositories {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:18.0.0'
-    //compile 'com.google.code.gson:gson:2.2.2'
+    compile 'com.google.code.gson:gson:2.2.2'
 }
 
 android {
@@ -40,7 +40,7 @@ android {
                 srcDir 'src/main/res'
             }
             assets {
-                srcDir 'src/mainassets'
+                srcDir 'src/main/assets'
             }
             manifest {
                 srcFile 'src/main/AndroidManifest.xml'
