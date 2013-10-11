@@ -17,9 +17,35 @@ dependencies {
     compile 'com.google.code.gson:gson:2.2.2'
 }
 
+def getBuildVersionName() {
+    println("calling function")
+    def config = new ConfigSlurper().parse(file("version.groovy").toURL())
+    return config.version.name
+}
+
+task incrementBuildVersion << {
+    File configFile = file("version.groovy")
+    def config = new ConfigSlurper().parse(configFile.toURL())
+    def tokens = config.version.name.tokenize(".")
+    //pop the last number from the list, increment, then append it back to the list
+    def minorVersion = tokens.pop().toInteger()
+    minorVersion++
+    tokens += minorVersion.toString()
+    def newVersion = tokens.join(".");
+    config.version.name = newVersion
+    configFile.withWriter { writer ->
+        config.writeTo(writer)
+    }
+}
+
 android {
     compileSdkVersion 18
     buildToolsVersion "18.1.0"
+    defaultConfig {
+        versionName getBuildVersionName()
+        minSdkVersion 14
+        targetSdkVersion 18
+    }
     productFlavors {
         chocolate {
             packageName 'com.romeo.icecreamgradle.chocolate'
@@ -85,7 +111,6 @@ android {
         }
         release {
             runProguard true
-            versionNameSuffix "-release"
             zipAlign true
             signingConfig signingConfigs.release
         }
